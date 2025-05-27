@@ -20,24 +20,32 @@ in stdenv.mkDerivation {
 
   src = ./.;
 
-  configurePhase = ''
-    cmake -DCMAKE_BUILD_TYPE=${build-type} \
-          -DNIX_LIBRARY_NAME=${name} \
-          -DCMAKE_EXPORT_COMPILE_COMMANDS=YES \
-          -DCMAKE_INSTALL_PREFIX=$dev \
-          -DCMAKE_INSTALL_LIBDIR=$out/lib \
-          -B build -S .
-  '';
+  cmakeFlags = [
+    "-DCMAKE_BUILD_TYPE=${build-type}"
+    "-DCMAKE_EXPORT_COMPILE_COMMANDS=YES"
+    "-DNIX_LIBRARY_NAME=${name}"
+    "-DCMAKE_BUILD_TYPE=Release"
+    #-DCMAKE_INSTALL_LIBDIR=out/lib
+    # other flags...
+  ];
+
+  # configurePhase = ''
+  #   cmake  \
+  #          \
+  #          \
+  #          \
+  #         -B build -S .
+  # '';
   #-DCMAKE_INSTALL_LIBDIR=$lib/lib \
 
-  buildPhase = ''
-    cmake --build build
-  '';
-  installPhase = ''
-    mkdir -p $out
-    mkdir -p $dev/include
-    cmake --install build
-  '';
+  # buildPhase = ''
+  #   cmake --build build
+  # '';
+  # installPhase = ''
+  #   mkdir -p $out
+  #   mkdir -p $dev/include
+  #   cmake --install build
+  # '';
   #mkdir -p $lib/lib
 
   meta = {
