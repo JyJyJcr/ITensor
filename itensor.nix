@@ -24,8 +24,8 @@ in stdenv.mkDerivation {
     cmake -DCMAKE_BUILD_TYPE=${build-type} \
           -DNIX_LIBRARY_NAME=${name} \
           -DCMAKE_EXPORT_COMPILE_COMMANDS=YES \
-          -DCMAKE_INSTALL_INCLUDEDIR=$dev/include \
-          -DCMAKE_INSTALL_PREFIX=$out \
+          -DCMAKE_INSTALL_PREFIX=$dev \
+          -DCMAKE_INSTALL_LIBDIR=$out/lib \
           -B build -S .
   '';
   #-DCMAKE_INSTALL_LIBDIR=$lib/lib \
