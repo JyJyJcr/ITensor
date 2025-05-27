@@ -36,7 +36,7 @@ in stdenv.mkDerivation {
   installPhase = ''
     mkdir -p $out
     mkdir -p $dev/include
-    cmake --install build --prefix $out
+    cmake --install build
   '';
   #mkdir -p $lib/lib
 

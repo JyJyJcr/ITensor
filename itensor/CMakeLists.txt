@@ -26,8 +26,7 @@ add_library(ITensor::ITensor ALIAS ITensor)
 
 install(TARGETS ITensor
   EXPORT itensor-targets
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib)
+  ARCHIVE LIBRARY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/config.h
   DESTINATION include/itensor)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/itensor
