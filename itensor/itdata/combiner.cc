@@ -49,7 +49,7 @@ permuteStore(Dense<T>   const& d,
     {
     auto tfrom = makeTenRef(d.data(),d.size(),&dis);
     auto to = Ten<Range,T>(permute(tfrom,P));
-    m.makeNewData<Dense<T>>(move(to.storage()));
+    m.makeNewData<Dense<T>>(std::move(to.storage()));
     }
 
 template<typename Storage>

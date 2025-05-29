@@ -163,7 +163,7 @@ diagHImpl(ITensor H,
 
         auto newmid = Index(m,itagset);
 
-        U = ITensor({active,newmid},Dense<T>{move(UU.storage())}); 
+        U = ITensor({active,newmid},Dense<T>{std::move(UU.storage())}); 
         D = ITensor({prime(newmid,pdiff),newmid},DiagReal{DD.begin(),DD.end()},H.scale());
 
         if(not H.scale().isTooBigForReal())
@@ -175,7 +175,7 @@ diagHImpl(ITensor H,
             println("diag_hermitian: scale too big for Real, omitting from returned spectrum.");
             }
 
-        return Spectrum{move(DD),{"Truncerr",truncerr}};
+        return Spectrum{std::move(DD),{"Truncerr",truncerr}};
         }
     else  // With QNs
         {
@@ -262,7 +262,7 @@ diagHImpl(ITensor H,
         stdx::sort(alleig,std::greater<Real>{});
         if(compute_qns) stdx::sort(alleigqn,std::greater<EigQN>{});
 
-        auto probs = Vector{move(alleig),VecRange{alleig.size()}};
+        auto probs = Vector{std::move(alleig),VecRange{alleig.size()}};
 
         //Determine number of states to keep m
         long m = probs.size();
@@ -364,7 +364,7 @@ diagHImpl(ITensor H,
             iq.emplace_back(qn(ai,1+B.i1),1l);
             }
 
-        auto d = Index(move(iq),-ai.dir(),itagset);
+        auto d = Index(std::move(iq),-ai.dir(),itagset);
 
         auto Uis = IndexSet(dag(ai),dag(d));
         auto Dis = IndexSet(prime(d,pdiff),dag(d));
@@ -403,8 +403,8 @@ diagHImpl(ITensor H,
             ++n;
             }
 
-        U = ITensor(Uis,move(Ustore));
-        D = ITensor(Dis,move(Dstore),H.scale());
+        U = ITensor(Uis,std::move(Ustore));
+        D = ITensor(Dis,std::move(Dstore),H.scale());
 
         if(H.scale().isTooBigForReal())
             {
@@ -419,10 +419,10 @@ diagHImpl(ITensor H,
             {
             auto qns = stdx::reserve_vector<QN>(alleigqn.size());
             for(auto& eq : alleigqn) qns.push_back(eq.qn);
-            return Spectrum(move(probs),move(qns),{"Truncerr",truncerr});
+            return Spectrum(std::move(probs),std::move(qns),{"Truncerr",truncerr});
             }
 
-        return Spectrum{move(probs),{"Truncerr",truncerr}};
+        return Spectrum{std::move(probs),{"Truncerr",truncerr}};
         }
     }
 

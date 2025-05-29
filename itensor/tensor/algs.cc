@@ -556,7 +556,7 @@ SVDRefImpl(MatRefc<T> const& M,
     auto n = Mr-start;
 
     //reuse rho's storage to avoid allocation
-    auto mv = move(rho);
+    auto mv = std::move(rho);
     reduceCols(mv,n);
 
     auto u = columns(U,start,ncols(U));
@@ -575,7 +575,7 @@ SVDRefImpl(MatRefc<T> const& M,
     SVDRefImpl(makeRef(b),makeRef(bu),d,makeRef(bv),args);
 
     //reuse mv's storage to avoid allocation
-    auto W = move(mv);
+    auto W = std::move(mv);
     mult(u,bu,W);
     u &= W;
 

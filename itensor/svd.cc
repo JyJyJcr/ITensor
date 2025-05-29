@@ -145,8 +145,8 @@ svdImpl(ITensor const& A,
         D = ITensor({uL,vL},
                     Diag<Real>{DD.begin(),DD.end()},
                     A.scale()*signfix);
-        U = ITensor({uI,uL},Dense<T>(move(UU.storage())),LogNum(signfix));
-        V = ITensor({vI,vL},Dense<T>(move(VV.storage())));
+        U = ITensor({uI,uL},Dense<T>(std::move(UU.storage())),LogNum(signfix));
+        V = ITensor({vI,vL},Dense<T>(std::move(VV.storage())));
 
         //Square all singular values
         //since convention is to report
@@ -164,7 +164,7 @@ svdImpl(ITensor const& A,
             }
 #endif
 
-        return Spectrum(move(DD),{"Truncerr",truncerr});
+        return Spectrum(std::move(DD),{"Truncerr",truncerr});
         }
     else
         {
@@ -230,7 +230,7 @@ svdImpl(ITensor const& A,
         stdx::sort(alleig,std::greater<Real>{});
         if(compute_qn) stdx::sort(alleigqn,std::greater<EigQN>{});
 
-        auto probs = Vector(move(alleig),VecRange{alleig.size()});
+        auto probs = Vector(std::move(alleig),VecRange{alleig.size()});
 
         long m = probs.size();
         Real truncerr = 0;
@@ -318,8 +318,8 @@ svdImpl(ITensor const& A,
         if(Riq.empty()) throw std::runtime_error("New Index of V after SVD is empty");
 #endif
 
-        auto L = Index(move(Liq),uI.dir(),litagset);
-        auto R = Index(move(Riq),vI.dir(),ritagset);
+        auto L = Index(std::move(Liq),uI.dir(),litagset);
+        auto R = Index(std::move(Riq),vI.dir(),ritagset);
 
         auto Uis = IndexSet(uI,dag(L));
         auto Dis = IndexSet(L,R);
@@ -396,9 +396,9 @@ svdImpl(ITensor const& A,
 
         //Fix sign to make sure D has positive elements
         Real signfix = (A.scale().sign() == -1) ? -1. : +1.;
-        U = ITensor(Uis,move(Ustore));
-        D = ITensor(Dis,move(Dstore),A.scale()*signfix);
-        V = ITensor(Vis,move(Vstore),LogNum{signfix});
+        U = ITensor(Uis,std::move(Ustore));
+        D = ITensor(Dis,std::move(Dstore),A.scale()*signfix);
+        V = ITensor(Vis,std::move(Vstore),LogNum{signfix});
         
         //Originally eigs were found without including scale
         //so put the scale back in
@@ -415,10 +415,10 @@ svdImpl(ITensor const& A,
             {
             auto qns = stdx::reserve_vector<QN>(alleigqn.size());
             for(auto& eq : alleigqn) qns.push_back(eq.qn);
-            return Spectrum(move(probs),move(qns),{"Truncerr",truncerr});
+            return Spectrum(std::move(probs),std::move(qns),{"Truncerr",truncerr});
             }
 
-        return Spectrum(move(probs),{"Truncerr",truncerr});
+        return Spectrum(std::move(probs),{"Truncerr",truncerr});
         }
     return Spectrum{};
     }

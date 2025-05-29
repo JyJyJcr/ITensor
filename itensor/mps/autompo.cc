@@ -378,14 +378,14 @@ add(HTerm const& t)
     auto it = terms_.find(t);
     if(it == terms_.end())
         {
-        terms_.insert(move(t));
+        terms_.insert(std::move(t));
         }
     else //found duplicate
         {
         auto nt = t;
         nt.coef += it->coef;
         terms_.erase(it);
-        terms_.insert(move(nt));
+        terms_.insert(std::move(nt));
         }
     }
 
@@ -645,7 +645,7 @@ toMPOImpl(AutoMPO const& am,
             }
         inqn.emplace_back(currq,currm);
 
-        links.at(n) = Index(move(inqn),tinyformat::format("Link,l=%d",n));
+        links.at(n) = Index(std::move(inqn),tinyformat::format("Link,l=%d",n));
         //printfln("links[%d]=\n%s",n,links[n]);
 
         //if(n <= 2 or n == N)
@@ -1108,7 +1108,7 @@ partitionHTerms(SiteSet const& sites,
         //    }
 
         auto it = tn.find(el);
-        if(it == tn.end()) tn.insert(move(el));
+        if(it == tn.end()) tn.insert(std::move(el));
 
         }
     }
@@ -1239,7 +1239,7 @@ compressMPO(SiteSet const& sites,
                 int m = ncols(V_npp[q]);
                 inqn.emplace_back(q,m);
                 }
-            links.at(n) = Index(move(inqn),tinyformat::format("Link,l=%d",n));
+            links.at(n) = Index(std::move(inqn),tinyformat::format("Link,l=%d",n));
             }
         else
             {
@@ -1349,7 +1349,7 @@ compressMPO(SiteSet const& sites,
             }
 
         // Store SVD computed at this step for next link
-        V_n = move(V_npp);
+        V_n = std::move(V_npp);
         
         max_d = max(max_d, dim(links.at(n)));
         }
@@ -1586,7 +1586,7 @@ toExpH_ZW1(AutoMPO const& am,
             }
         qnsize.emplace_back(currq,currm);
 
-        links.at(n) = Index(move(qnsize),tinyformat::format("Link,l=%d",n));
+        links.at(n) = Index(std::move(qnsize),tinyformat::format("Link,l=%d",n));
 
         //if(n <= 2 or n == N)
         //    {

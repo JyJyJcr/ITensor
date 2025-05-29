@@ -989,7 +989,7 @@ ITensor
 toDense(ITensor T)
     {
     if(T.store()) doTask(ToDense{T.inds()},T.store());
-    return ITensor{move(T.inds()),move(T.store()),T.scale()};
+    return ITensor{std::move(T.inds()),std::move(T.store()),T.scale()};
     }
 
 bool
@@ -1008,7 +1008,7 @@ removeQNs(ITensor T)
     if(T.store()) doTask(RemoveQNs{inds(T)},T.store());
     auto nis = inds(T);
     nis.removeQNs();
-    return ITensor{move(nis),move(T.store()),T.scale()};
+    return ITensor{std::move(nis),std::move(T.store()),T.scale()};
     }
 
 ITensor& ITensor::

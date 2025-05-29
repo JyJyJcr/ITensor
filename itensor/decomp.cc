@@ -630,12 +630,12 @@ eigDecompImpl(ITensor T,
 #endif
                 store[n] = Cplx(*ri,*ii);
                 }
-            R = ITensor({lind,newmid},move(store));
+            R = ITensor({lind,newmid},std::move(store));
             }
         else
             {
             //real eigenvectors
-            R = ITensor({lind,newmid},DenseReal{move(Rr.storage())});
+            R = ITensor({lind,newmid},DenseReal{std::move(Rr.storage())});
             }
 
         if(norm(Di) > 1E-16*norm(Dr))
@@ -646,12 +646,12 @@ eigDecompImpl(ITensor T,
                 {
                 store.store.at(n) = Cplx(Dr(n),Di(n));
                 }
-            D = ITensor({prime(newmid),newmid},move(store),T.scale());
+            D = ITensor({prime(newmid),newmid},std::move(store),T.scale());
             }
         else
             {
             //real eigenvectors
-            D = ITensor({prime(newmid),newmid},DiagReal{move(Dr.storage())},T.scale());
+            D = ITensor({prime(newmid),newmid},DiagReal{std::move(Dr.storage())},T.scale());
             }
 
         if(full)
@@ -675,12 +675,12 @@ eigDecompImpl(ITensor T,
 #endif
                     store[n] = Cplx(*ri,*ii);
                     }
-                L = ITensor({lind,newmid},move(store));
+                L = ITensor({lind,newmid},std::move(store));
                 }
             else
                 {
                 //real eigenvectors
-                L = ITensor({lind,newmid},DenseReal{move(Lr.storage())});
+                L = ITensor({lind,newmid},DenseReal{std::move(Lr.storage())});
                 }
             }
         }
@@ -1021,8 +1021,8 @@ qrImpl(ITensor const& A,
         auto qL = Index(nrows(RR),internaltagset);
         auto rL = setTags(qL,internaltagset);
 
-        Q = ITensor({qI,qL},Dense<T>(move(QQ.storage())));
-        R = ITensor({rL,rI},Dense<T>(move(RR.storage())));
+        Q = ITensor({qI,qL},Dense<T>(std::move(QQ.storage())));
+        R = ITensor({rL,rI},Dense<T>(std::move(RR.storage())));
 	}
     else
         {
@@ -1097,7 +1097,7 @@ qrImpl(ITensor const& A,
 	      }
 	  }
 	
-	auto qL = Index(move(Liq),qI.dir(),internaltagset);
+	auto qL = Index(std::move(Liq),qI.dir(),internaltagset);
 	auto rL = qL;
 	rL.setTags(internaltagset);
 	auto Qis = IndexSet(qI,dag(qL));
@@ -1168,8 +1168,8 @@ qrImpl(ITensor const& A,
 	      }
 	  }
 	
-	Q = ITensor(Qis,move(Qstore));
-	R = ITensor(Ris,move(Rstore));
+	Q = ITensor(Qis,std::move(Qstore));
+	R = ITensor(Ris,std::move(Rstore));
 	}
     }
         

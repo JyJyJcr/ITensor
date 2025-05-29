@@ -40,7 +40,7 @@ Spectrum(Args const& args)
 
 Spectrum::
 Spectrum(Vector && eigs, Args const& args)
-  : eigs_(move(eigs))
+  : eigs_(std::move(eigs))
     {
     computeTruncerr(args);
     }
@@ -49,8 +49,8 @@ Spectrum::
 Spectrum(Vector    && eigs, 
          QNStorage && qns,
          Args      const& args)
-  : eigs_(move(eigs)),
-    qns_(move(qns))
+  : eigs_(std::move(eigs)),
+    qns_(std::move(qns))
     {
     computeTruncerr(args);
     }
