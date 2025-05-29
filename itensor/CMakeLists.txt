@@ -33,9 +33,7 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/itensor
   DESTINATION include
   FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
 install(EXPORT itensor-targets
+  FILE itensor-config.cmake
   NAMESPACE ITensor::
-  DESTINATION lib/cmake/itensor)
-install(EXPORT itensor-targets
-    FILE itensor-config.cmake
-    DESTINATION share/cmake/foo/
-    EXPORT_LINK_INTERFACE_LIBRARIES)
+  DESTINATION lib/cmake/itensor
+  EXPORT_LINK_INTERFACE_LIBRARIES)
