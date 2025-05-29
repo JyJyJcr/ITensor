@@ -6,8 +6,12 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 enable_testing()
 
+option(ITENSOR_USE_OPENMP "itensor use openmp (this could compete with blas/lapack multithreading)" OFF)
+
 find_package(LAPACK REQUIRED)
-find_package(OpenMP)
+if(ITENSOR_USE_OPENMP)
+  find_package(OpenMP REQUIRED)
+endif()
 
 add_subdirectory(itensor)
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
