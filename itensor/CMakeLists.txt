@@ -9,7 +9,7 @@ if(APPLE)
   set_target_properties(ITensor PROPERTIES LINK_FLAGS
     "-Wl,-compatibility_version,${${PROJECT_NAME}_COMPAT_VERSION} -Wl,-current_version,${${PROJECT_NAME}_VERSION}")
 endif()
-target_compile_features(ITensor PUBLIC cxx_std_17)
+target_compile_features(ITensor PUBLIC cxx_std_20)
 target_sources(ITensor PRIVATE
   util/args.cc util/input.cc util/cputime.cc
   tensor/lapack_wrap.cc tensor/vec.cc tensor/mat.cc tensor/gemm.cc tensor/algs.cc tensor/contract.cc
