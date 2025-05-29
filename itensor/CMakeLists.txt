@@ -47,8 +47,5 @@ configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/itensor-config.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/itensor-config.cmake"
   INSTALL_DESTINATION lib/cmake/itensor)
-
-
-
-# install(FILES "${CMAKE_CURRENT_BINARY_DIR}/itensor-config.cmake"
-#   DESTINATION lib/cmake/itensor)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/itensor-config.cmake"
+  DESTINATION lib/cmake/itensor)
