@@ -1,6 +1,8 @@
+@PACKAGE_INIT@
+
 include(CMakeFindDependencyMacro)
 
 find_dependency(LAPACK REQUIRED)
-find_dependency(OpenMP)
+@ITENSOR_FIND_DEPENDENCY_OPENMP@
 
 include("${CMAKE_CURRENT_LIST_DIR}/itensor-targets.cmake")

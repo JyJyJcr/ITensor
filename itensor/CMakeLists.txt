@@ -33,7 +33,22 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/itensor
   DESTINATION include
   FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
 install(EXPORT itensor-targets
-  FILE itensor-config.cmake
   NAMESPACE ITensor::
-  DESTINATION lib/cmake/itensor
-  EXPORT_LINK_INTERFACE_LIBRARIES)
+  DESTINATION lib/cmake/itensor)
+include(CMakePackageConfigHelpers)
+
+if(ITENSOR_USE_OPENMP)
+  set(ITENSOR_FIND_DEPENDENCY_OPENMP "find_dependency(OpenMP REQUIRED)")
+else()
+  set(ITENSOR_FIND_DEPENDENCY_OPENMP "")
+endif()
+
+configure_package_config_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/itensor-config.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/itensor-config.cmake"
+  INSTALL_DESTINATION lib/cmake/itensor)
+
+
+
+# install(FILES "${CMAKE_CURRENT_BINARY_DIR}/itensor-config.cmake"
+#   DESTINATION lib/cmake/itensor)
