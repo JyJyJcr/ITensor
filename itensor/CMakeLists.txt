@@ -35,5 +35,7 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/itensor
 install(EXPORT itensor-targets
   NAMESPACE ITensor::
   DESTINATION lib/cmake/itensor)
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/itensor-config.cmake"
-  DESTINATION lib/cmake/itensor)
+install(EXPORT itensor-targets
+    FILE itensor-config.cmake
+    DESTINATION share/cmake/foo/
+    EXPORT_LINK_INTERFACE_LIBRARIES)
